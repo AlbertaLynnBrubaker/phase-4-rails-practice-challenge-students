@@ -2,5 +2,10 @@ class Student < ApplicationRecord
   belongs_to :instructor
 
   validates :name, presence: true
-  validates :age, comparison: { greater_than_or_equal_to: 18 }
+  validate :confirm_adult
+
+  def confirm_adult
+    errors.add(:age, :exclusion) if age < 18
+  end
+
 end
